@@ -35,18 +35,14 @@ python -m http.server
 
 기능별로 스크립트가 분리되어 있으며, `index.html`에서 의존성 순서대로 로드합니다.
 
-| 파일 | 역할 |
-| --- | --- |
-| `config.js` | 상수 / 색상 / 스프라이트 매핑 |
-| `utils.js` | 수학 헬퍼 |
-| `notices.js` | 공지 멘트 데이터 |
-| `sprites.js` | 스프라이트 로딩 / 그리기 |
-| `input.js` | 키 입력 |
-| `entities.js` | 플레이어 / 몬스터 상태 |
-| `metrics.js` | DPS / 막대 차트 시리즈 |
-| `ai.js` | Utility AI 판단 (THINK) |
-| `update.js` | 이동 / 전투 / 사망 |
-| `notice.js` | 공지 배너 컨트롤러 |
-| `render.js` | 캔버스 렌더 + 막대 차트 |
-| `ui.js` | 우측 패널 DOM |
-| `game.js` | 게임 루프 |
+```
+index.html
+assets/                스프라이트 이미지 · 스크린샷
+styles/styles.css      스타일
+src/
+├─ core/               config.js(상수/색/스프라이트 매핑) · utils.js(수학 헬퍼) · game.js(게임 루프)
+├─ data/               notices.js(공지 멘트 데이터)
+├─ entities/           entities.js(플레이어/몬스터 상태) · sprites.js(스프라이트 로딩/그리기)
+├─ systems/            input.js(키 입력) · ai.js(Utility AI 판단) · update.js(이동/전투/사망) · metrics.js(DPS/막대차트)
+└─ render/             render.js(캔버스 렌더+막대차트) · ui.js(우측 패널 DOM) · notice.js(공지 배너 컨트롤러)
+```
