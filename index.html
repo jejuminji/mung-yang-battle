@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🐱 vs 🐶 Utility AI Arena — POC</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>🐱 vs 🐶 Utility AI Arena</h1>
+    <p>강아지(플레이어) vs 고양이(몬스터). 고양이는 "거리"와 "자기 HP"로 chase / attack / retreat 를 고릅니다.</p>
+  </header>
+
+  <!-- 상단 공지: 상황별 멘트가 실시간으로 바뀜 (데이터는 notices.js) -->
+  <div id="notice">
+    <span id="notice-icon">📢</span>
+    <span id="notice-text">대기 중…</span>
+    <span id="notice-count">멘트 0종</span>
+  </div>
+
+  <div class="wrap">
+    <div class="left">
+      <!-- 게임 화면 -->
+      <canvas id="game" width="800" height="540"></canvas>
+      <!-- 왼쪽 아래: 실시간 측정 수평 막대 차트 (5개 시리즈) -->
+      <canvas id="graph" width="800" height="180"></canvas>
+    </div>
+
+    <!-- AI 디버그 패널 -->
+    <aside id="panel">
+      <h2>🐱 MONSTER AI</h2>
+
+      <div class="state-line">현재 상태(current_state)
+        <span id="state" class="badge">CHASE</span>
+      </div>
+      <p id="reason" class="reason">…</p>
+
+      <div class="row" id="row-chase">
+        <div class="lbl"><span>chase_score (추격)</span><b id="val-chase">0.00</b></div>
+        <div class="bar"><i id="bar-chase" class="fill chase"></i></div>
+      </div>
+      <div class="row" id="row-attack">
+        <div class="lbl"><span>attack_score (공격)</span><b id="val-attack">0.00</b></div>
+        <div class="bar"><i id="bar-attack" class="fill attack"></i></div>
+      </div>
+      <div class="row" id="row-retreat">
+        <div class="lbl"><span>retreat_score (후퇴)</span><b id="val-retreat">0.00</b></div>
+        <div class="bar"><i id="bar-retreat" class="fill retreat"></i></div>
+      </div>
+
+      <hr />
+      <div class="stat"><span>🐶 플레이어 HP</span><b id="php">100</b></div>
+      <div class="stat"><span>🐱 몬스터 HP</span><b id="mhp">100</b></div>
+      <div class="stat"><span>거리 (px)</span><b id="dist">0</b></div>
+      <div class="stat"><span>처치 / 사망</span><b id="kd">0 / 0</b></div>
+
+      <hr />
+      <div class="help">
+        <b>조작</b><br />
+        <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 이동 ·
+        <kbd>Space</kbd> 근접 공격<br />
+        <span class="dim">가까우면 attack · 멀면 chase · HP 낮으면 retreat</span>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ===== 기능별 분리 스크립트 (의존성 순서대로 로드) ===== -->
+  <script src="config.js"></script>   <!-- 상수/색/스프라이트 매핑 -->
+  <script src="utils.js"></script>    <!-- 수학 헬퍼 -->
+  <script src="notices.js"></script>  <!-- 공지 멘트 데이터 -->
+  <script src="sprites.js"></script>  <!-- 스프라이트 로딩/그리기 -->
+  <script src="input.js"></script>    <!-- 키 입력 -->
+  <script src="entities.js"></script> <!-- 플레이어/몬스터 상태 -->
+  <script src="metrics.js"></script>  <!-- DPS/막대차트 시리즈 -->
+  <script src="ai.js"></script>       <!-- Utility AI 판단 -->
+  <script src="update.js"></script>   <!-- 이동/전투/사망 -->
+  <script src="notice.js"></script>   <!-- 공지 배너 컨트롤러 -->
+  <script src="render.js"></script>   <!-- 캔버스 렌더 + 막대차트 -->
+  <script src="ui.js"></script>       <!-- 우측 패널 DOM -->
+  <script src="game.js"></script>     <!-- 게임 루프 -->
+</body>
+</html>
